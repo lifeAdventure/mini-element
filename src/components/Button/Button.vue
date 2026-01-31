@@ -15,6 +15,8 @@
     :disabled="disabled || loading"
     :autofocus="autofocus"
   >
+    <Icon :icon="icon" v-if="icon" />
+    <Icon v-if="loading" icon="spinner" spin />
     <span>
       <slot />
     </span>
@@ -24,6 +26,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { ButtonInstance, ButtonProps } from './types';
+
+import Icon from '../Icon/Icon.vue';
 
 defineOptions({
   name: 'MiniButton'

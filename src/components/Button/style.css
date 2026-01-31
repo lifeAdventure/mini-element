@@ -81,6 +81,9 @@
     background-color: var(--mini-button-disabled-bg-color);
     border-color: var(--mini-button-disabled-border-color);
   }
+  [class*='mini-icon'] + span {
+    margin-left: 6px;
+  }
 }
 @each $val in primary, success, warning, info, danger {
   .mini-button--$(val) {

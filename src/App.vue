@@ -22,12 +22,10 @@
     <Button type="success">Test2</Button>
     <br />
     <br />
-  </main>
-  <main>
-    <h1>Icon</h1>
-    <Icon icon="arrow-up" type="primary" :size="iconSize"/>
-    <Icon icon="user" type="success"/>
-    <Icon icon="home" type="info"/>
+    <h2>Button with Icon</h2>
+    <Button icon="arrow-up" type="primary">Arrow-up</Button>
+    <Button icon="user" type="warning">User</Button>
+    <Button loading>Loading...</Button>
   </main>
 </template>
 
@@ -35,10 +33,8 @@
 import { onMounted, ref } from 'vue';
 import Button from './components/Button/Button.vue';
 import type { ButtonInstance } from './components/Button/types';
-import Icon from "./components/Icon/Icon.vue";
 
 const buttonRef = ref<ButtonInstance | null>(null);
-const iconSize = ref<any>("sm");
 
 // Button test:
 onMounted(() => {
@@ -46,14 +42,6 @@ onMounted(() => {
     console.log('buttonRef', buttonRef.value.ref);
   }
 });
-
-// Icon test:
-onMounted(() => {
-  setTimeout(() => {
-    iconSize.value = '2xl';
-  }, 2000);
-});
-
 </script>
 
 <style scoped></style>

@@ -30,4 +30,5 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+.eslintcache
 package-lock.json

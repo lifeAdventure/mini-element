@@ -1,0 +1,86 @@
+.mini-alert {
+  --mini-alert-font-weight: var(--mini-font-weight-primary);
+  --mini-alert-bg-color: var(--mini-fill-color-blank);
+  --mini-alert-text-color: var(--mini-text-color-regular);
+  --mini-alert-padding: 8px 16px;
+}
+.mini-alert {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 1.4;
+  min-height: 32px;
+  height: auto;
+  white-space: normal;
+  color: var(--mini-alert-text-color);
+  text-align: left;
+  outline: none;
+  font-weight: var(--mini-alert-font-weight);
+  vertical-align: middle;
+  -webkit-appearance: none;
+  background-color: var(--mini-alert-bg-color);
+  padding: var(--mini-alert-padding);
+  font-size: var(--mini-font-size-base);
+  border-radius: var(--mini-border-radius-base);
+  opacity: 1;
+  &:not(:first-child) {
+    margin: 20px 0px 0px;
+  }
+  &.mini-alert--light {
+    .mini-alert__close-btn {
+      color: var(--mini-text-color-placeholder);
+    }
+  }
+  &.mini-alert--dark {
+    .mini-alert__close-btn {
+      color: var(--mini-fill-color-light);
+    }
+  }
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6,
+  & p {
+    color: inherit;
+  }
+  .mini-alert__content {
+    width: 95%;
+    text-align: left;
+    word-wrap: no;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+  }
+  .mini-alert__close-btn {
+    position: absolute;
+    top: 10.5px;
+    right: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+}
+@each $val in primary, success, warning, info, danger {
+  .mini-alert--$(val).mini-alert--light {
+    --mini-alert-text-color: var(--mini-color-$(val));
+    --mini-alert-bg-color: var(--mini-color-$(val)-light-9);
+  }
+  .mini-alert--$(val).mini-alert--dark {
+    --mini-alert-text-color: var(--mini-color-white);
+    --mini-alert-bg-color: var(--mini-color-$(val));
+  }
+}
+.fade-leave-active {
+  transition: opacity var(--mini-transition-duration);
+}
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-leave-to {
+  opacity: 0;
+}

@@ -65,6 +65,34 @@
       </CollapseItem>
     </Collapse>
   </main>
+  <main style="max-width: 600px">
+    <h1>Alert</h1>
+    <Alert>This is a default alert</Alert>
+    <Alert content="Primary alert" type="primary" />
+    <Alert type="success" effect="light">
+      <h1>Success alert from slot</h1>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quaerat mollitia dolores
+        praesentium numquam voluptatibus inventore quo corporis dicta quidem veniam fuga, earum,
+        nisi possimus ullam similique dolore? Accusantium, eius.
+      </p>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed quaerat mollitia dolores
+        praesentium numquam voluptatibus inventore quo corporis dicta quidem veniam fuga, earum,
+        nisi possimus ullam similique dolore? Accusantium, eius.
+      </p>
+    </Alert>
+    <Alert content="Dark mode warning + close emits" type="warning" effect="dark" @close="hello" />
+    <Alert
+      content="Dark mode info + manual close when mouse enter"
+      type="info"
+      effect="dark"
+      ref="alertRef"
+      manual
+      @mouseenter="manualClose"
+    />
+    <Alert content="Closable is false: Error alert" type="danger" :closable="false" />
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -74,9 +102,12 @@ import type { ButtonInstance } from './components/Button/types';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import type { NameType } from './components/Collapse/types';
+import Alert from './components/Alert/Alert.vue';
+import type { AlertInstance } from './components/Alert/types';
 
 const buttonRef = ref<ButtonInstance | null>(null);
 const currentNames = ref<NameType[]>(['number1']);
+const alertRef = ref<AlertInstance | null>(null);
 
 // Button test:
 onMounted(() => {
@@ -89,6 +120,13 @@ onMounted(() => {
 setTimeout(() => {
   currentNames.value = ['number1', 'number2'];
 }, 2000);
-</script>
 
+// alert test:
+const hello = () => {
+  alert('Hello world!');
+};
+const manualClose = () => {
+  alertRef.value?.close();
+};
+</script>
 <style scoped></style>

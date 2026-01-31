@@ -23,22 +23,36 @@
     <br />
     <br />
   </main>
+  <main>
+    <h1>Icon</h1>
+    <Icon icon="arrow-up" type="primary" :size="iconSize"/>
+    <Icon icon="user" type="success"/>
+    <Icon icon="home" type="info"/>
+  </main>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import Button from './components/Button/Button.vue';
 import type { ButtonInstance } from './components/Button/types';
+import Icon from "./components/Icon/Icon.vue";
 
 const buttonRef = ref<ButtonInstance | null>(null);
+const iconSize = ref<any>("sm");
 
-//  button test:
+// Button test:
 onMounted(() => {
   if (buttonRef.value) {
     console.log('buttonRef', buttonRef.value.ref);
   }
 });
 
+// Icon test:
+onMounted(() => {
+  setTimeout(() => {
+    iconSize.value = '2xl';
+  }, 2000);
+});
 
 </script>
 

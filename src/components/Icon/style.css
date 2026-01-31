@@ -1,0 +1,16 @@
+.mini-icon {
+  --mini-icon-color: inherit;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  fill: currentColor;
+  color: var(--mini-icon-color);
+  font-size: inherit;
+}
+
+@each $val in primary, info, success, warning, danger {
+  .mini-icon--$(val) {
+    --mini-icon-color: var(--mini-color-$(val));
+  }
+}

@@ -1,0 +1,124 @@
+.mini-button {
+  --mini-button-font-weight: var(--mini-font-weight-primary);
+  --mini-button-border-color: var(--mini-border-color);
+  --mini-button-bg-color: var(--mini-fill-color-blank);
+  --mini-button-text-color: var(--mini-text-color-regular);
+  --mini-button-disabled-text-color: var(--mini-disabled-text-color);
+  --mini-button-disabled-bg-color: var(--mini-fill-color-blank);
+  --mini-button-disabled-border-color: var(--mini-border-color-light);
+  --mini-button-hover-text-color: var(--mini-color-primary);
+  --mini-button-hover-bg-color: var(--mini-color-primary-light-9);
+  --mini-button-hover-border-color: var(--mini-color-primary-light-7);
+  --mini-button-active-text-color: var(--mini-button-hover-text-color);
+  --mini-button-active-border-color: var(--mini-color-primary);
+  --mini-button-active-bg-color: var(--mini-button-hover-bg-color);
+  --mini-button-outline-color: var(--mini-color-primary-light-5);
+  --mini-button-active-color: var(--mini-text-color-primary);
+}
+.mini-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  height: 32px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--mini-button-text-color);
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.1s;
+  font-weight: var(--mini-button-font-weight);
+  user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  background-color: var(--mini-button-bg-color);
+  border: var(--mini-border);
+  border-color: var(--mini-button-border-color);
+  padding: 8px 15px;
+  font-size: var(--mini-font-size-base);
+  border-radius: var(--mini-border-radius-base);
+  & + & {
+    margin-left: 12px;
+  }
+  &:hover,
+  &:focus {
+    color: var(--mini-button-hover-text-color);
+    border-color: var(--mini-button-hover-border-color);
+    background-color: var(--mini-button-hover-bg-color);
+    outline: none;
+  }
+  &:active {
+    color: var(--mini-button-active-text-color);
+    border-color: var(--mini-button-active-border-color);
+    background-color: var(--mini-button-active-bg-color);
+    outline: none;
+  }
+  &.is-plain {
+    --mini-button-hover-text-color: var(--mini-color-primary);
+    --mini-button-hover-bg-color: var(--mini-fill-color-blank);
+    --mini-button-hover-border-color: var(--mini-color-primary);
+  }
+  /*round*/
+  &.is-round {
+    border-radius: var(--mini-border-radius-round);
+  }
+  /*circle*/
+  &.is-circle {
+    border-radius: 50%;
+    padding: 8px;
+  }
+  /*disabled*/
+  &.is-disabled,
+  &.is-disabled:hover,
+  &.is-disabled:focus,
+  &[disabled],
+  &[disabled]:hover,
+  &[disabled]:focus {
+    color: var(--mini-button-disabled-text-color);
+    cursor: not-allowed;
+    background-image: none;
+    background-color: var(--mini-button-disabled-bg-color);
+    border-color: var(--mini-button-disabled-border-color);
+  }
+}
+@each $val in primary, success, warning, info, danger {
+  .mini-button--$(val) {
+    --mini-button-text-color: var(--mini-color-white);
+    --mini-button-bg-color: var(--mini-color-$(val));
+    --mini-button-border-color: var(--mini-color-$(val));
+    --mini-button-outline-color: var(--mini-color-$(val)-light-5);
+    --mini-button-active-color: var(--mini-color-$(val)-dark-2);
+    --mini-button-hover-text-color: var(--mini-color-white);
+    --mini-button-hover-bg-color: var(--mini-color-$(val)-light-3);
+    --mini-button-hover-border-color: var(--mini-color-$(val)-light-3);
+    --mini-button-active-bg-color: var(--mini-color-$(val)-dark-2);
+    --mini-button-active-border-color: var(--mini-color-$(val)-dark-2);
+    --mini-button-disabled-text-color: var(--mini-color-white);
+    --mini-button-disabled-bg-color: var(--mini-color-$(val)-light-5);
+    --mini-button-disabled-border-color: var(--mini-color-$(val)-light-5);
+  }
+  .mini-button--$(val).is-plain {
+    --mini-button-text-color: var(--mini-color-$(val));
+    --mini-button-bg-color: var(--mini-color-$(val)-light-9);
+    --mini-button-border-color: var(--mini-color-$(val)-light-5);
+    --mini-button-hover-text-color: var(--mini-color-white);
+    --mini-button-hover-bg-color: var(--mini-color-$(val));
+    --mini-button-hover-border-color: var(--mini-color-$(val));
+    --mini-button-active-text-color: var(--mini-color-white);
+  }
+}
+.mini-button--large {
+  --mini-button-size: 40px;
+  height: var(--mini-button-size);
+  padding: 12px 19px;
+  font-size: var(--mini-font-size-base);
+  border-radius: var(--mini-border-radius-base);
+}
+.mini-button--small {
+  --mini-button-size: 24px;
+  height: var(--mini-button-size);
+  padding: 5px 11px;
+  font-size: 12px;
+  border-radius: calc(var(--mini-border-radius-base) - 1px);
+}

@@ -1,5 +1,21 @@
 <template>
   <main>
+    <h1>Tooltip</h1>
+    <Tooltip
+      ref="tooltipRef"
+      content="123123"
+      :trigger="trigger"
+      manual
+      :popper-options="{ placement: 'right' }"
+    >
+      <img src="../docs/public/img/logo.png" alt="logo" width="200" height="200" />
+    </Tooltip>
+    <br />
+    <br />
+    <Button @click="showPopper">show tooltip</Button>
+    <Button @click="hidePopper">hide tooltip</Button>
+  </main>
+  <main>
     <h1>Buttton</h1>
     <Button ref="buttonRef" round @click="console.log('Test')">Test</Button>
     <Button circle>Test</Button>
@@ -65,6 +81,8 @@
       </CollapseItem>
     </Collapse>
   </main>
+  <br />
+  <br />
   <main style="max-width: 600px">
     <h1>Alert</h1>
     <Alert>This is a default alert</Alert>
@@ -104,22 +122,26 @@ import CollapseItem from './components/Collapse/CollapseItem.vue';
 import type { NameType } from './components/Collapse/types';
 import Alert from './components/Alert/Alert.vue';
 import type { AlertInstance } from './components/Alert/types';
+import Tooltip from './components/Tooltip/Tooltip.vue';
+import type { TooltipInstance } from './components/Tooltip/types';
 
 const buttonRef = ref<ButtonInstance | null>(null);
-const currentNames = ref<NameType[]>(['number1']);
 const alertRef = ref<AlertInstance | null>(null);
+const currentNames = ref<NameType[]>(['number1']);
+const trigger = ref<any>('hover');
+const tooltipRef = ref<TooltipInstance | null>(null);
 
-// Button test:
-onMounted(() => {
-  if (buttonRef.value) {
-    console.log('buttonRef', buttonRef.value.ref);
-  }
-});
+// button test:
+// onMounted(() => {
+//   if (buttonRef.value) {
+//     console.log('buttonRef', buttonRef.value.ref);
+//   }
+// });
 
 // collapse test:
-setTimeout(() => {
-  currentNames.value = ['number1', 'number2'];
-}, 2000);
+// setTimeout(() => {
+//   currentNames.value = ['number1', 'number2'];
+// }, 2000);
 
 // alert test:
 const hello = () => {
@@ -128,5 +150,14 @@ const hello = () => {
 const manualClose = () => {
   alertRef.value?.close();
 };
+
+// tooltip test
+const showPopper = () => {
+  tooltipRef.value && tooltipRef.value.show();
+};
+const hidePopper = () => {
+  tooltipRef.value && tooltipRef.value.hide();
+};
 </script>
+
 <style scoped></style>

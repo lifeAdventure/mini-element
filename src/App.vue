@@ -1,21 +1,5 @@
 <template>
   <main>
-    <h1>Tooltip</h1>
-    <Tooltip
-      ref="tooltipRef"
-      content="123123"
-      :trigger="trigger"
-      manual
-      :popper-options="{ placement: 'right' }"
-    >
-      <img src="../docs/public/img/logo.png" alt="logo" width="200" height="200" />
-    </Tooltip>
-    <br />
-    <br />
-    <Button @click="showPopper">show tooltip</Button>
-    <Button @click="hidePopper">hide tooltip</Button>
-  </main>
-  <main>
     <h1>Buttton</h1>
     <Button ref="buttonRef" round @click="console.log('Test')">Test</Button>
     <Button circle>Test</Button>
@@ -111,10 +95,40 @@
     />
     <Alert content="Closable is false: Error alert" type="danger" :closable="false" />
   </main>
+  <main>
+    <h1>Tooltip</h1>
+    <Tooltip
+      ref="tooltipRef"
+      content="123123"
+      :trigger="trigger"
+      manual
+      :popper-options="{ placement: 'right' }"
+    >
+      <img src="../docs/public/img/logo.png" alt="logo" width="200" height="200" />
+    </Tooltip>
+    <br />
+    <br />
+    <Button @click="showPopper">show tooltip</Button>
+    <Button @click="hidePopper">hide tooltip</Button>
+  </main>
+  <main>
+    <h1>Dropdown</h1>
+    <Dropdown :menu-options="options">
+      <Button type="primary">下拉菜单</Button>
+    </Dropdown>
+    <span>===</span>
+    <Dropdown placement="bottom" :menu-options="options" trigger="click" manual ref="dropdownRef">
+      <Button>菜单容器</Button>
+    </Dropdown>
+    <br />
+    <br />
+    <Button type="primary" @click="open">点击手动触发显示</Button>
+    <Button type="danger" @click="close">点击手动触发隐藏</Button>
+  </main>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { h, onMounted, ref } from 'vue';
 import Button from './components/Button/Button.vue';
 import type { ButtonInstance } from './components/Button/types';
 import Collapse from './components/Collapse/Collapse.vue';
@@ -124,12 +138,21 @@ import Alert from './components/Alert/Alert.vue';
 import type { AlertInstance } from './components/Alert/types';
 import Tooltip from './components/Tooltip/Tooltip.vue';
 import type { TooltipInstance } from './components/Tooltip/types';
+import Dropdown from './components/Dropdown/Dropdown.vue';
+import type { DropdownInstance } from './components/Dropdown/types';
 
 const buttonRef = ref<ButtonInstance | null>(null);
 const alertRef = ref<AlertInstance | null>(null);
 const currentNames = ref<NameType[]>(['number1']);
 const trigger = ref<any>('hover');
 const tooltipRef = ref<TooltipInstance | null>(null);
+const dropdownRef = ref<DropdownInstance | null>(null);
+const options = [
+  { key: 1, label: h('button', 'this is bold') },
+  { key: 2, label: 'item2', disabled: true },
+  { key: 3, label: 'item3', divided: true },
+  { key: 4, label: 'item4' }
+];
 
 // button test:
 // onMounted(() => {
@@ -157,6 +180,14 @@ const showPopper = () => {
 };
 const hidePopper = () => {
   tooltipRef.value && tooltipRef.value.hide();
+};
+
+// dropdown test
+const open = () => {
+  dropdownRef.value?.show();
+};
+const close = () => {
+  dropdownRef.value?.hide();
 };
 </script>
 

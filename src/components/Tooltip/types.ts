@@ -2,7 +2,7 @@ import type { Options, Placement } from '@popperjs/core';
 
 export interface TooltipProps {
   content?: string;
-  trigger: 'hover' | 'click';
+  trigger?: 'hover' | 'click';
   placement?: Placement;
   popperOptions?: Partial<Options>;
   transition?: string;

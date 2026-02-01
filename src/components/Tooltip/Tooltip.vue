@@ -1,14 +1,14 @@
 <template>
   <div ref="popperContainerNode" class="mini-tooltip" v-on="outerEvents">
     <div ref="triggerNode" class="mini-tooltip__trigger" v-on="events">
-      <slot />
+      <slot></slot>
     </div>
     <Transition :name="transition" @after-leave="handleAfterLeave">
       <div ref="popperNode" class="mini-tooltip__popper" v-show="isOpen">
         <slot name="content">
           <div class="mini-tooltip__popper__content">{{ content }}</div>
-          <div id="arrow" data-popper-arrow></div>
         </slot>
+        <div id="arrow" data-popper-arrow></div>
       </div>
     </Transition>
   </div>

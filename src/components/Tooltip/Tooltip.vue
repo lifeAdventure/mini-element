@@ -4,7 +4,14 @@
       <slot></slot>
     </div>
     <Transition :name="transition" @after-leave="handleAfterLeave">
-      <div ref="popperNode" class="mini-tooltip__popper" v-show="isOpen">
+      <!-- 新增：给popper节点绑定鼠标进入/离开事件 -->
+      <div
+        ref="popperNode"
+        class="mini-tooltip__popper"
+        v-show="isOpen"
+        @mouseenter="handlePopperMouseEnter"
+        @mouseleave="handlePopperMouseLeave"
+      >
         <slot name="content">
           <div class="mini-tooltip__popper__content">{{ content }}</div>
         </slot>
@@ -39,13 +46,49 @@ const popperContainerNode = ref<HTMLElement | null>(null);
 const triggerNode = ref<HTMLElement | null>(null);
 const popperNode = ref<HTMLElement | null>(null);
 const isOpen = ref<boolean>(false);
+// 新增：标记鼠标是否在popper区域内
+const isMouseInPopper = ref<boolean>(false);
 let popperInstance: null | Instance = null;
 
+const events = computed<Record<string, any>>(() => {
+  if (props.manual) return {};
+  return props.trigger === 'click'
+    ? {
+        click: togglePopper
+      }
+    : {
+        mouseenter: finalOpen
+      };
+});
+
+// 改动：调整容器mouseleave逻辑，仅当鼠标不在popper内时才关闭
+const outerEvents = computed<Record<string, any>>(() => {
+  if (props.manual) return {};
+  return props.trigger === 'click'
+    ? {}
+    : {
+        mouseleave: () => {
+          // 鼠标离开容器但还在popper内时，不触发关闭
+          if (!isMouseInPopper.value) {
+            finalClose();
+          }
+        }
+      };
+});
+
 const open = () => {
+  if (isOpen.value) {
+    return;
+  }
+  console.log('open');
   isOpen.value = true;
   emits('visible-change', true);
 };
 const close = () => {
+  if (!isOpen.value) {
+    return;
+  }
+  console.log('close');
   isOpen.value = false;
   emits('visible-change', false);
 };
@@ -56,7 +99,7 @@ const finalOpen = () => {
   debounceClose.cancel();
   debounceOpen();
 };
-const finalClose = () => {
+const finalClose = (): void => {
   debounceOpen.cancel();
   debounceClose();
 };
@@ -69,24 +112,16 @@ const togglePopper = () => {
   }
 };
 
-const events = computed<Record<string, any>>(() => {
-  if (props.manual) return {};
-  return props.trigger === 'click'
-    ? {
-        click: togglePopper
-      }
-    : {
-        mouseenter: finalOpen
-      };
-});
-const outerEvents = computed<Record<string, any>>(() => {
-  if (props.manual) return {};
-  return props.trigger === 'click'
-    ? {}
-    : {
-        mouseleave: finalClose
-      };
-});
+// 新增：popper鼠标进入 - 取消关闭、保持打开
+const handlePopperMouseEnter = () => {
+  isMouseInPopper.value = true;
+  debounceClose.cancel(); // 取消正在等待的关闭定时器
+};
+// 新增：popper鼠标离开 - 触发关闭（保留closeDelay）
+const handlePopperMouseLeave = () => {
+  isMouseInPopper.value = false;
+  finalClose();
+};
 
 const popperOptions = computed(() => {
   return {
@@ -114,6 +149,7 @@ watch(
   },
   { flush: 'post' }
 );
+
 useClickOutside(popperContainerNode, () => {
   if (props.trigger === 'click' && isOpen.value && !props.manual) {
     finalClose();
@@ -122,12 +158,16 @@ useClickOutside(popperContainerNode, () => {
     emits('click-outside', true);
   }
 });
+
 const handleAfterLeave = () => {
   popperInstance?.destroy();
   popperInstance = null;
 };
+
 onUnmounted(() => {
   handleAfterLeave();
+  debounceOpen.cancel();
+  debounceClose.cancel();
 });
 
 defineExpose<TooltipInstance>({

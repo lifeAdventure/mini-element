@@ -22,7 +22,7 @@
                 :class="{ 'is-disabled': option.disabled, 'is-divided': option.divided }"
                 @click="() => optionClick(option)"
               >
-                <RenderVNode :v-node="option.label" class="mini-dropdown__item" />
+                <RenderVNode :v-node="option.label"/>
               </li>
             </template>
           </ul>
@@ -46,8 +46,8 @@ const props = withDefaults(defineProps<DropdownProps>(), {
   placement: 'bottom',
   trigger: 'click',
   transition: 'fade',
-  openDelay: 50,
-  closeDelay: 50,
+  openDelay: 500,
+  closeDelay: 500,
   hideAfterClick: true
 });
 const emits = defineEmits<DropdownEmits>();

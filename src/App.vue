@@ -113,7 +113,7 @@
   </main>
   <main>
     <h1>Dropdown</h1>
-    <Dropdown :menu-options="options">
+    <Dropdown :menu-options="options" trigger="hover">
       <Button type="primary">下拉菜单</Button>
     </Dropdown>
     <span>===</span>

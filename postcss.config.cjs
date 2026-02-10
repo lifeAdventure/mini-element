@@ -9,9 +9,4 @@ module.exports = {
       }
     })
   ],
-  loaderOptions: {
-    postcss: {
-      from: undefined
-    }
-  }
 };

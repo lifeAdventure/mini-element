@@ -46,8 +46,8 @@ const props = withDefaults(defineProps<DropdownProps>(), {
   placement: 'bottom',
   trigger: 'click',
   transition: 'fade',
-  openDelay: 500,
-  closeDelay: 500,
+  openDelay: 50,
+  closeDelay: 50,
   hideAfterClick: true
 });
 const emits = defineEmits<DropdownEmits>();

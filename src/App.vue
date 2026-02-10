@@ -101,7 +101,6 @@
       ref="tooltipRef"
       content="123123"
       :trigger="trigger"
-      manual
       :popper-options="{ placement: 'right' }"
     >
       <img src="../docs/public/img/logo.png" alt="logo" width="200" height="200" />
@@ -140,6 +139,7 @@ import Tooltip from './components/Tooltip/Tooltip.vue';
 import type { TooltipInstance } from './components/Tooltip/types';
 import Dropdown from './components/Dropdown/Dropdown.vue';
 import type { DropdownInstance } from './components/Dropdown/types';
+import { createMessage } from './components/Message/method';
 
 const buttonRef = ref<ButtonInstance | null>(null);
 const alertRef = ref<AlertInstance | null>(null);
@@ -189,6 +189,11 @@ const open = () => {
 const close = () => {
   dropdownRef.value?.hide();
 };
+
+// message test
+createMessage({message: "hello 1", duration: 0});
+createMessage({message: "hello 2", duration: 0});
+createMessage({message: "hello 3", duration: 0});
 </script>
 
 <style scoped></style>

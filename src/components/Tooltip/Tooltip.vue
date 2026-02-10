@@ -68,10 +68,13 @@ const outerEvents = computed<Record<string, any>>(() => {
     ? {}
     : {
         mouseleave: () => {
-          // 鼠标离开容器但还在popper内时，不触发关闭
-          if (!isMouseInPopper.value) {
-            finalClose();
-          }
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              if (!isMouseInPopper.value) {
+                finalClose();
+              }
+          });
+          });
         }
       };
 });
@@ -80,7 +83,6 @@ const open = () => {
   if (isOpen.value) {
     return;
   }
-  console.log('open');
   isOpen.value = true;
   emits('visible-change', true);
 };
@@ -88,7 +90,6 @@ const close = () => {
   if (!isOpen.value) {
     return;
   }
-  console.log('close');
   isOpen.value = false;
   emits('visible-change', false);
 };

@@ -1,7 +1,12 @@
 <template>
   <main>
     <h1>Buttton</h1>
-    <Button ref="buttonRef" round @click="console.log('Test')">Test</Button>
+    <Button
+      ref="buttonRef"
+      round
+      @click="createMessage({ message: 'hello world', showClose: true, duration: 3000 })"
+      >Test</Button
+    >
     <Button circle>Test</Button>
     <Button plain>Test</Button>
     <Button type="danger" disabled>Test</Button>
@@ -191,9 +196,8 @@ const close = () => {
 };
 
 // message test
-createMessage({message: "hello 1", duration: 0});
-createMessage({message: "hello 2", duration: 0});
-createMessage({message: "hello 3", duration: 0});
+createMessage({ message: 'hello world again', type: 'warning', showClose: true, duration: 0 });
+createMessage({ message: 'hello world third', type: 'success', showClose: true, duration: 0 });
 </script>
 
 <style scoped></style>

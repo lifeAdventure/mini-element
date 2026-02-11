@@ -7,14 +7,17 @@ export interface MessageProps {
   duration?: number;
   offset?: number;
   destroy: () => void;
-  id: string,
+  id: string;
+  zIndex?: number;
+  transition?: string;
 }
 
 export interface MessageContext {
   id: string;
-  vnode: VNode,
-  props: MessageProps,
-  vm: ComponentInternalInstance,
+  vnode: VNode;
+  props: MessageProps;
+  vm: ComponentInternalInstance;
+  destroy: () => void;
 }
 
-export type CreateMessageProps = Omit<MessageProps, 'destroy' | 'id'>;
+export type CreateMessageProps = Omit<MessageProps, 'destroy' | 'id' | 'zIndex' | 'transition'>;

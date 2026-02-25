@@ -24,7 +24,7 @@
     <Button type="warning">Test2</Button>
     <Button type="info">Test2</Button>
     <Button type="danger">Test2</Button>
-    <Button type="success">Test2</Button>
+    <Button type="success" disabled>Test2</Button>
     <br />
     <br />
     <h2>Button with Icon</h2>
@@ -108,7 +108,7 @@
       :trigger="trigger"
       :popper-options="{ placement: 'right' }"
     >
-      <img src="../docs/public/img/logo.png" alt="logo" width="200" height="200" />
+      <img src="../docs/public/img/logo.jpg" alt="logo" width="200" height="200" />
     </Tooltip>
     <br />
     <br />
@@ -158,6 +158,7 @@ const options = [
   { key: 3, label: 'item3', divided: true },
   { key: 4, label: 'item4' }
 ];
+const dynamicStr = ref<string>('hello');
 
 // button test:
 // onMounted(() => {
@@ -196,8 +197,13 @@ const close = () => {
 };
 
 // message test
-createMessage({ message: 'hello world again', type: 'warning', showClose: true, duration: 0 });
+createMessage({ message: dynamicStr, type: 'warning', showClose: true, duration: 0 });
 createMessage({ message: 'hello world third', type: 'success', showClose: true, duration: 0 });
+onMounted(() => {
+  setTimeout(() => {
+    dynamicStr.value = 'world';
+  }, 2000);
+});
 </script>
 
 <style scoped></style>

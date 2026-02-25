@@ -1,7 +1,8 @@
-import type { ComponentInternalInstance, VNode } from 'vue';
+import type { ComponentInternalInstance, VNode, Ref } from 'vue';
 
+export type messageContent = string | VNode | Ref<string | VNode>;
 export interface MessageProps {
-  message?: string | VNode;
+  message?: messageContent;
   type?: 'success' | 'info' | 'warning' | 'danger';
   showClose?: boolean;
   duration?: number;

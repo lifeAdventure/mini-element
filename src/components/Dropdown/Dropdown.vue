@@ -44,7 +44,7 @@ defineOptions({
 });
 const props = withDefaults(defineProps<DropdownProps>(), {
   placement: 'bottom',
-  trigger: 'click',
+  trigger: 'hover',
   transition: 'fade',
   openDelay: 50,
   closeDelay: 50,

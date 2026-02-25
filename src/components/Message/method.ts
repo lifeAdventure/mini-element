@@ -17,7 +17,9 @@ export function createMessage(props: CreateMessageProps) {
   };
   const manualDestroy = () => {
     const idx = instances.findIndex((instance) => instance.id === id);
-    instances[idx].vm.exposed!.visible.value = false;
+    if (idx !== -1) {
+      instances[idx].vm.exposed!.visible.value = false;
+    }
   };
 
   const { nextZIndex } = useZIndex();

@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'renderVNode',
+  name: 'RenderVNode',
   props: {
     vNode: {
       type: [String, Object]

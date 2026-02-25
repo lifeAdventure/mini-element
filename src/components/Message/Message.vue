@@ -12,7 +12,7 @@
       >
         <div class="mini-message__content">
           <slot>
-            <RenderVNode :v-node="message"></RenderVNode>
+            <RenderVNode :v-node="resolvedMessage"></RenderVNode>
           </slot>
         </div>
         <div class="mini-message__close-btn" v-if="showClose" @click.stop="visible = false">
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import RenderVNode from '../Common/RenderVNode';
 import Icon from '../Icon/Icon.vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, isRef, onMounted, ref } from 'vue';
 import { getLastBottomOffset } from './method';
 import useEventListener from '@/hooks/useEventListener';
 
@@ -44,6 +44,9 @@ const props = withDefaults(defineProps<MessageProps>(), {
   transition: 'fade-up'
 });
 
+const resolvedMessage = computed(() =>
+  isRef(props.message) ? props.message.value : props.message
+);
 const visible = ref<boolean>(false);
 const messageRef = ref<HTMLDivElement | null>(null);
 const height = ref<number>(0);

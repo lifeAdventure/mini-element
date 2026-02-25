@@ -73,7 +73,7 @@ const outerEvents = computed<Record<string, any>>(() => {
               if (!isMouseInPopper.value) {
                 finalClose();
               }
-          });
+            });
           });
         }
       };
@@ -121,7 +121,9 @@ const handlePopperMouseEnter = () => {
 // 新增：popper鼠标离开 - 触发关闭（保留closeDelay）
 const handlePopperMouseLeave = () => {
   isMouseInPopper.value = false;
-  finalClose();
+  if (!props.manual) {
+    finalClose();
+  }
 };
 
 const popperOptions = computed(() => {

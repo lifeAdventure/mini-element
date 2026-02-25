@@ -25,6 +25,7 @@ import { ref } from 'vue';
 defineOptions({ name: 'MiniAlert' });
 
 const props = withDefaults(defineProps<AlertProps>(), {
+  content: '',
   type: 'info',
   effect: 'light',
   closable: true,

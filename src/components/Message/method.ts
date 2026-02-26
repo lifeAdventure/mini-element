@@ -59,3 +59,9 @@ export function getLastBottomOffset(id: string) {
     return instances[idx - 1].vm.exposed!.bottomOffset.value;
   }
 }
+
+export const closeAll = () => {
+  instances.forEach((instance) => {
+    instance.destroy();
+  });
+};

@@ -129,10 +129,40 @@
     <Button type="primary" @click="open">点击手动触发显示</Button>
     <Button type="danger" @click="close">点击手动触发隐藏</Button>
   </main>
+  <main style="max-width: 600px">
+    <h1>Input</h1>
+    <div>
+      <Input v-model="testArr[0]" placeholder="基础文本框，请输入" />
+      <span>{{ testArr[0] }}</span>
+    </div>
+    <br />
+    <div>
+      <Input v-model="testArr[1]" clearable placeholder="输入字符以后可以点击清空" />
+    </div>
+    <br />
+    <div>
+      <Input v-model="testArr[2]" show-password clearable placeholder="切换密码显示隐藏" />
+    </div>
+    <br />
+    <div>
+      <Input v-model="testArr[3]" disabled />
+    </div>
+    <br />
+    <div style="display: flex; align-items: center">
+      <Input v-model="testArr[4]" placeholder="大的 Input" size="large"></Input>
+      <Input v-model="testArr[4]" placeholder="普通的 Input"></Input>
+      <Input v-model="testArr[4]" placeholder="小的 Input" size="small"></Input>
+    </div>
+    <br />
+    <div>
+      <Input v-model="testArr[5]" placeholder="可以是一个 Textarea" type="textarea"></Input>
+    </div>
+    <br />
+  </main>
 </template>
 
 <script setup lang="ts">
-import { h, onMounted, ref } from 'vue';
+import { h, onMounted, reactive, ref } from 'vue';
 import Button from './components/Button/Button.vue';
 import type { ButtonInstance } from './components/Button/types';
 import Collapse from './components/Collapse/Collapse.vue';
@@ -145,6 +175,7 @@ import type { TooltipInstance } from './components/Tooltip/types';
 import Dropdown from './components/Dropdown/Dropdown.vue';
 import type { DropdownInstance } from './components/Dropdown/types';
 import { createMessage } from './components/Message/method';
+import Input from './components/Input/Input.vue';
 
 const buttonRef = ref<ButtonInstance | null>(null);
 const alertRef = ref<AlertInstance | null>(null);
@@ -159,6 +190,7 @@ const options = [
   { key: 4, label: 'item4' }
 ];
 const dynamicStr = ref<string>('hello');
+const testArr = reactive<string[]>([]);
 
 // button test:
 // onMounted(() => {

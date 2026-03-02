@@ -41,7 +41,11 @@
           @change="handleChange"
         />
         <!-- suffix -->
-        <span v-if="$slots.suffix || showClear || showPasswordArea" class="mini-input__suffix" @click="keepFocus">
+        <span
+          v-if="$slots.suffix || showClear || showPasswordArea"
+          class="mini-input__suffix"
+          @click="keepFocus"
+        >
           <slot name="suffix" />
           <Icon
             icon="circle-xmark"
@@ -93,7 +97,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs, watch } from 'vue';
-import type { InputEmits, InputProps } from './type';
+import type { InputEmits, InputInstance, InputProps } from './types';
 import Icon from '../Icon/Icon.vue';
 
 defineOptions({
@@ -109,7 +113,7 @@ const attrs = useAttrs();
 const innerValue = ref(props.modelValue);
 const isFocus = ref(false);
 const passwordVisible = ref(false);
-const _ref = ref<HTMLInputElement | HTMLTextAreaElement | null>(null);
+const _ref = ref<HTMLInputElement | HTMLTextAreaElement>();
 
 const showClear = computed(
   () => props.clearable && !props.disabled && !!innerValue.value && isFocus.value
@@ -156,7 +160,7 @@ watch(
   }
 );
 
-defineExpose({
+defineExpose<InputInstance>({
   ref: _ref
 });
 </script>

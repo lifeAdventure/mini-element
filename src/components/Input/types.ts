@@ -24,5 +24,5 @@ export interface InputEmits {
 }
 
 export interface InputInstance {
-  ref: Ref<HTMLInputElement | HTMLTextAreaElement>;
+  ref: Ref<HTMLInputElement | HTMLTextAreaElement | undefined>;
 }

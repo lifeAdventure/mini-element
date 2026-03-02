@@ -1,0 +1,89 @@
+.mini-select {
+  --mini-select-item-hover-bg-color: var(--mini-fill-color-light);
+  --mini-select-item-font-size: var(--mini-font-size-base);
+  --mini-select-item-font-color: var(--mini-text-color-regular);
+  --mini-select-item-selected-font-color: var(--mini-color-primary);
+  --mini-select-item-disabled-font-color: var(--mini-text-color-placeholder);
+  --mini-select-input-focus-border-color: var(--mini-color-primary);
+}
+
+.mini-select {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 32px;
+
+  .mini-tooltip .mini-tooltip__popper {
+    padding: 0;
+  }
+
+  .mini-input.is-focus .mini-input__wrapper {
+    box-shadow: 0 0 0 1px var(--mini-select-input-focus-border-color) inset !important;
+  }
+
+  .mini-input {
+    .header-angle {
+      transition: transform var(--mini-transition-duration);
+
+      &.is-active {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .mini-input__inner {
+    cursor: pointer;
+  }
+
+  .mini-select__nodata,
+  .mini-select__loading {
+    padding: 10px 0;
+    margin: 0;
+    text-align: center;
+    color: var(--mini-text-color-secondary);
+    font-size: var(--mini-select-font-size);
+  }
+
+  .mini-select__menu {
+    list-style: none;
+    margin: 6px 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .mini-select__menu-item {
+    margin: 0;
+    font-size: var(--mini-select-item-font-size);
+    padding: 0 32px 0 20px;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--mini-select-item-font-color);
+    height: 34px;
+    line-height: 34px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--mini-select-item-hover-bg-color);
+    }
+
+    &.is-selected {
+      color: var(--mini-select-item-selected-font-color);
+      font-weight: 700;
+    }
+
+    &.is-highlighted {
+      background-color: var(--mini-select-item-hover-bg-color);
+    }
+
+    &.is-disabled {
+      color: var(--mini-select-item-disabled-font-color);
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}

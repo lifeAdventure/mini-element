@@ -41,7 +41,7 @@
           @change="handleChange"
         />
         <!-- suffix -->
-        <span v-if="$slots.suffix || showClear || showPasswordArea" class="mini-input__suffix">
+        <span v-if="$slots.suffix || showClear || showPasswordArea" class="mini-input__suffix" @click="keepFocus">
           <slot name="suffix" />
           <Icon
             icon="circle-xmark"
@@ -119,6 +119,10 @@ const showPasswordArea = computed(
   () => props.showPassword && !props.disabled && !!innerValue.value
 );
 
+const keepFocus = () => {
+  _ref.value?.focus();
+};
+
 const handleInput = () => {
   emits('update:modelValue', innerValue.value);
   emits('input', innerValue.value);
@@ -135,7 +139,6 @@ const handleBlur = (e: FocusEvent) => {
   emits('blur', e);
 };
 const handleClear = () => {
-  _ref.value?.focus();
   innerValue.value = '';
   emits('update:modelValue', '');
   emits('input', '');

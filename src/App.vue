@@ -132,7 +132,14 @@
   <main style="max-width: 600px">
     <h1>Input</h1>
     <div>
-      <Input v-model="testArr[0]" placeholder="基础文本框，请输入" />
+      <Input v-model="testArr[0]" placeholder="基础文本框，请输入">
+        <template #prefix>
+          <Icon icon="home" />
+        </template>
+        <template #append>
+          <Icon icon="search" />
+        </template>
+      </Input>
       <span>{{ testArr[0] }}</span>
     </div>
     <br />
@@ -164,6 +171,7 @@
 <script setup lang="ts">
 import { h, onMounted, reactive, ref } from 'vue';
 import Button from './components/Button/Button.vue';
+import Icon from './components/Icon/Icon.vue';
 import type { ButtonInstance } from './components/Button/types';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';

@@ -1,0 +1,38 @@
+:root {
+  --vp-c-brand-1: var(--mini-color-primary);
+  --vp-c-brand-light: var(--mini-color-primary-light-3);
+  --vp-c-brand-lighter: var(--mini-color-primary-light-5);
+  --vp-button-brand-bg: var(--mini-color-primary);
+  --vp-button-brand-hover-bg: var(--mini-color-primary-light-3);
+  --vp-button-brand-active-bg: var(--mini-color-primary-light-3);
+  --vp-c-brand-dark: var(--mini-color-primary-dark-2);
+  --vp-c-brand-darker: #265f99;
+
+  --component-preview-bg: var(--vp-code-block-bg);
+  --component-preview-soft: var(--vp-code-block-bg-light);
+
+  --hero-image-radius: 20px;
+}
+
+.VPHero .image-container img {
+  border-radius: var(--hero-image-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+html.dark .VPHero .image-container img {
+  box-shadow: 0 4px 24px rgba(255, 255, 255, 0.45);
+}
+
+body {
+  color: var(--vp-c-text-1);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: var(--vp-c-text-1);
+}

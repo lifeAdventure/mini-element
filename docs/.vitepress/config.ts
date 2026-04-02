@@ -6,7 +6,7 @@ import { fileURLToPath, URL } from "node:url";
 export default defineConfig({
   base: "/mini-element/",
   title: "mini-element",
-  description: "基于vue3的仿Element Plus的组件库",
+  description: "基于vue3的轻量级UI组件库",
   // srcDir: "components",
   vite: {
     resolve: {

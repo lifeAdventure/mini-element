@@ -15,7 +15,7 @@ defineOptions({
 const props = defineProps<CollapseProps>();
 const emits = defineEmits<CollapseEmits>();
 
-// props本身是reactive，所以它的属性是原始类型，不具备响应性，那就不能用computed包裹
+// props.modelValue本身确实是响应式的，但是activeNames只是在初始化时复制了一份值，它们并不是同一个引用
 // 本来组件自身就需要使用activeNames，为了兼容外界的自定义modelValue并且避免直接操作props.modelValue（Vue 中应视 props 为只读）
 // ref(props.modelValue) 只是一次性快照，需要用watch手动追踪更新
 const activeNames = ref<NameType[]>(props.modelValue);
@@ -47,5 +47,4 @@ provide(collapseContextKey, {
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -14,70 +14,71 @@
   >
     <!-- input -->
     <template v-if="type !== 'textarea'">
-      <!-- prepend -->
+      <!-- prepend slot -->
       <div v-if="$slots.prepend" class="mini-input__prepend">
-        <slot name="prepend"></slot>
+        <slot name="prepend" />
       </div>
+      <!-- input__wrapper -->
       <div class="mini-input__wrapper">
-        <!-- prefix -->
+        <!-- prefix slot -->
         <span v-if="$slots.prefix" class="mini-input__prefix">
           <slot name="prefix" />
         </span>
         <input
           class="mini-input__inner"
-          ref="_ref"
+          ref="inputRef"
           v-bind="attrs"
-          v-model="innerValue"
-          :type="showPassword ? (passwordVisible ? 'text' : 'password') : type"
+          :type="showPasswordArea ? (passwordVisible ? 'text' : 'password') : type"
           :disabled="disabled"
           :readonly="readonly"
           :autocomplete="autocomplete"
           :placeholder="placeholder"
           :autofocus="autofocus"
           :form="form"
+          v-model="innerValue"
           @input="handleInput"
+          @change="handleChange"
           @focus="handleFocus"
           @blur="handleBlur"
-          @change="handleChange"
         />
-        <!-- suffix -->
+        <!-- suffix slot -->
         <span
           v-if="$slots.suffix || showClear || showPasswordArea"
           class="mini-input__suffix"
           @click="keepFocus"
         >
-          <slot name="suffix" />
+          <slot name="suffix"></slot>
           <Icon
-            icon="circle-xmark"
             v-if="showClear"
+            icon="circle-xmark"
             class="mini-input__clear"
-            @click="handleClear"
-            @mousedown.prevent="() => {}"
-          />
+            @click="clear"
+            @mousedown.prevent="NOOP"
+          ></Icon>
           <Icon
-            icon="eye"
             v-if="showPasswordArea && passwordVisible"
+            icon="eye"
             class="mini-input__password"
             @click="togglePasswordVisible"
-          />
+          ></Icon>
           <Icon
-            icon="eye-slash"
             v-if="showPasswordArea && !passwordVisible"
+            icon="eye-slash"
             class="mini-input__password"
             @click="togglePasswordVisible"
-          />
+          ></Icon>
         </span>
       </div>
-      <!-- append -->
+      <!-- append slot -->
       <div v-if="$slots.append" class="mini-input__append">
-        <slot name="append"></slot>
+        <slot name="append" />
       </div>
     </template>
     <!-- textarea -->
     <template v-else>
       <textarea
         class="mini-textarea__wrapper"
-        v-model="innerValue"
+        ref="inputRef"
         v-bind="attrs"
         :disabled="disabled"
         :readonly="readonly"
@@ -85,25 +86,27 @@
         :placeholder="placeholder"
         :autofocus="autofocus"
         :form="form"
+        v-model="innerValue"
         @input="handleInput"
         @focus="handleFocus"
-        @blur="handleBlur"
         @change="handleChange"
-        ref="_ref"
+        @blur="handleBlur"
       />
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useAttrs, watch } from 'vue';
-import type { InputEmits, InputInstance, InputProps } from './types';
+import { computed, inject, ref, useAttrs, watch, type Ref } from 'vue';
+import { type InputEmits, type InputProps } from './types';
 import Icon from '../Icon/Icon.vue';
-
+import { nextTick } from 'vue';
+import { formItemContextKey } from '../Form/types';
 defineOptions({
   name: 'MiniInput',
   inheritAttrs: false
 });
+
 const props = withDefaults(defineProps<InputProps>(), {
   type: 'text',
   autocomplete: 'off'
@@ -113,56 +116,64 @@ const attrs = useAttrs();
 const innerValue = ref(props.modelValue);
 const isFocus = ref(false);
 const passwordVisible = ref(false);
-const _ref = ref<HTMLInputElement | HTMLTextAreaElement>();
+const inputRef = ref() as Ref<HTMLInputElement>;
+// 为form表单验证提供
+const formItemContext = inject(formItemContextKey, null);
 
-const showClear = computed(
-  () => props.clearable && !props.disabled && !!innerValue.value && isFocus.value
-);
-
-const showPasswordArea = computed(
-  () => props.showPassword && !props.disabled && !!innerValue.value
-);
-
-const keepFocus = () => {
-  _ref.value?.focus();
+// 运行form组件验证
+const runValidation = (trigger?: string) => {
+  // formItemContext?.validate?.(trigger);
+  formItemContext?.validate?.(trigger).catch((e) => console.log(e.errors));
 };
-
+//首先触发了blur，因为icon在input外部，用mousedown.prevent
+const NOOP = () => {};
+const keepFocus = async () => {
+  await nextTick();
+  inputRef.value.focus();
+};
 const handleInput = () => {
   emits('update:modelValue', innerValue.value);
   emits('input', innerValue.value);
+  runValidation('input');
 };
 const handleChange = () => {
   emits('change', innerValue.value);
+  runValidation('change');
 };
-const handleFocus = (e: FocusEvent) => {
+const showClear = computed(
+  () => props.clearable && !props.disabled && !!innerValue.value && isFocus.value
+);
+const showPasswordArea = computed(
+  () => props.showPassword && !props.disabled && !!innerValue.value
+);
+const handleFocus = (event: FocusEvent) => {
   isFocus.value = true;
-  emits('focus', e);
+  emits('focus', event);
 };
-const handleBlur = (e: FocusEvent) => {
+const handleBlur = (event: FocusEvent) => {
   isFocus.value = false;
-  emits('blur', e);
+  emits('blur', event);
+  runValidation('blur');
 };
-const handleClear = () => {
+const clear = () => {
   innerValue.value = '';
   emits('update:modelValue', '');
+  emits('clear');
   emits('input', '');
   emits('change', '');
-  emits('clear');
 };
 const togglePasswordVisible = () => {
   passwordVisible.value = !passwordVisible.value;
 };
-
 watch(
   () => props.modelValue,
   (newValue) => {
     innerValue.value = newValue;
   }
 );
-
-defineExpose<InputInstance>({
-  ref: _ref
+defineExpose({
+  ref: inputRef
 });
 </script>
 
-<style scoped></style>
+<style></style>
